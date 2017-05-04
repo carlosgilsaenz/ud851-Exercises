@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // complete (21) Call getSupportLoaderManager and store it in a LoaderManager variable
         // complete (22) Get our Loader by calling getLoader and passing the ID we specified
         // complete (23) If the Loader was null, initialize it. Else, restart it.
-        
+
         getSupportLoaderManager().restartLoader(GITHUB_SEARCH_LOADER, queryBundle, this);
     }
 
