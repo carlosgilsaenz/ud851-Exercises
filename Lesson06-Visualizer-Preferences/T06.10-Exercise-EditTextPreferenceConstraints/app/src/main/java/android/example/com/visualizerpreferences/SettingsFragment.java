@@ -27,9 +27,9 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.widget.Toast;
 
-// TODO (1) Implement OnPreferenceChangeListener
+// complete (1) Implement OnPreferenceChangeListener
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -51,13 +51,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 setPreferenceSummary(p, value);
             }
         }
-        // TODO (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
+        // complete (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
+
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // Figure out which preference was changed
         Preference preference = findPreference(key);
+
         if (null != preference) {
             // Updates the summary for the preference
             if (!(preference instanceof CheckBoxPreference)) {
@@ -88,7 +90,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         }
     }
 
-    // TODO (2) Override onPreferenceChange. This method should try to convert the new preference value
+    // complete (2) Override onPreferenceChange. This method should try to convert the new preference value
     // to a float; if it cannot, show a helpful error message and return false. If it can be converted
     // to a float check that that float is between 0 (exclusive) and 3 (inclusive). If it isn't, show
     // an error message and return false. If it is a valid number, return true.
@@ -98,6 +100,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onCreate(savedInstanceState);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+        Preference editPref = findPreference(getString(R.string.pref_size_key));
+        editPref.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -105,5 +109,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onDestroy();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Toast error = Toast.makeText(getActivity().getApplicationContext(),"Input value from 0 - 3", Toast.LENGTH_SHORT);
+        String value = (String) newValue;
+
+        if(value.isEmpty() || value.equals("")){
+            value = getString(R.string.pref_size_default);
+        }
+
+        try{
+            float f = Float.parseFloat(value);
+            if(f < 0 || f > 3){
+                error.show();
+                return false;
+            }
+        }catch (Exception e){
+            error.show();
+            return false;
+        }
+
+        return true;
     }
 }

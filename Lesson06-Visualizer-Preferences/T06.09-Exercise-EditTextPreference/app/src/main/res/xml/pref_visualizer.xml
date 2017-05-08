@@ -23,7 +23,7 @@
         android:summaryOn="@string/pref_show_true"
         android:title="@string/pref_show_treble_label" />
 
-    <!-- TODO (1) Add and EditTextPreference with all of the appropriate strings stored in strings.xml.
+    <!-- complete (1) Add and EditTextPreference with all of the appropriate strings stored in strings.xml.
         It should have a key, default value of 1 and title -->
 
     <ListPreference
@@ -32,5 +32,11 @@
         android:entryValues="@array/pref_color_option_values"
         android:key="@string/pref_color_key"
         android:title="@string/pref_color_label" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_edit_text_default"
+        android:key="@string/pref_edit_text_key"
+        android:title="@string/pref_edit_text_label"
+        android:inputType="numberDecimal" />
 
 </PreferenceScreen>
