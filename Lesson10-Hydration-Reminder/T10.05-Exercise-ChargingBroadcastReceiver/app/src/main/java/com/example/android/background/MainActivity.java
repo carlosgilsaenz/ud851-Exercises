@@ -168,10 +168,7 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            boolean results = false;
-            if(action.equals(Intent.ACTION_POWER_CONNECTED)){
-                results = true;
-            }
+            boolean results = action.equals(Intent.ACTION_POWER_CONNECTED);
             showCharging(results);
         }
     }
